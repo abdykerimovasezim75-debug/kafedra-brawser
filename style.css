@@ -1,0 +1,483 @@
+/* 1. Сбрасываем стандартные отступы браузера */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    /* Цвет "нежная сирень" */
+    background-color: #F3E8FF; 
+    color: #333;
+    margin: 0;
+}
+
+/* 2. Делаем шапку в одну линию */
+header .container {
+    display: flex;
+    justify-content: space-between; /* Лого слева, кнопка справа */
+    align-items: center;
+    padding: 20px 8%;
+    background-color: white;
+}
+
+/* Стили для меню */
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-right: 30px;
+    cursor: pointer;
+}
+
+/* 3. Оформляем фиолетовую кнопку "Войти" */
+.btn-login {
+    background-color: #A663F2; /* Фиолетовый как в Figma */
+    color: white;
+    padding: 10px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* 4. Главный блок (текст слева) */
+.hero {
+    padding: 80px 8%;
+}
+
+.hero h1 {
+    font-size: 48px;
+    color: #2D2D2D;
+    margin-bottom: 20px;
+    max-width: 600px;
+}
+.hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px; /* Расстояние между текстом и картинкой */
+}
+
+.hero-image img {
+    max-width: 100%; /* Чтобы картинка не вылезала за края */
+    height: auto;
+}
+
+/* Сделаем заголовок чуть жирнее и больше, как в Figma */
+.hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+.hero-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px; /* Расстояние между текстом и картинкой */
+}
+
+.hero-image img {
+    max-width: 100%; /* Чтобы картинка не вылезала за края */
+    height: auto;
+}
+
+/* Сделаем заголовок чуть жирнее и больше, как в Figma */
+.hero h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+.features {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 50px;
+}
+
+.card {
+    background-color: #FFFFFF;
+    padding: 30px 20px;
+    border-radius: 20px;
+    /* Тень цвета темной сирени, но очень прозрачная */
+    box-shadow: 0 10px 30px rgba(166, 99, 242, 0.15); 
+    text-align: center;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card h3 {
+    color: #2D2D2D;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.card-img {
+    width: 70px;      /* Подбери ширину, как в Figma */
+    height: 70px;     /* Подбери высоту */
+    object-fit: contain; /* Чтобы фото не сплющивалось */
+    margin-bottom: 20px; /* Отступ снизу до текста */
+}
+
+.card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.05); /* Мягкая тень */
+    text-align: center;
+    flex: 1; /* Чтобы все карточки были одинаковыми */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-img {
+    width: 50px; /* Размер логотипа */
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+    font-weight: bold;
+    color: #4A4A4A;
+}
+
+nav ul {
+    display: flex;
+    gap: 25px; /* Расстояние между пунктами меню */
+    list-style: none;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 15px;
+}
+.btn-primary {
+    background-color: #A663F2; /* Тот самый фиолетовый из Figma */
+    color: white;              /* Белый текст */
+    padding: 14px 28px;        /* Внутренние отступы (высота и ширина) */
+    border-radius: 10px;       /* Скругление углов */
+    text-decoration: none;     /* Убирает синее подчеркивание */
+    display: inline-block;     /* Чтобы кнопка правильно держала форму */
+    font-weight: 600;          /* Жирность текста */
+    margin-top: 25px;          /* Отступ сверху от текста */
+    transition: 0.3s;          /* Плавность при наведении */
+}
+
+/* Эффект при наведении мышки */
+.btn-primary:hover {
+    background-color: #8e44ad; /* Становится чуть темнее */
+    box-shadow: 0 5px 15px rgba(166, 99, 242, 0.4); /* Появляется свечение */
+}
+/* Стили для белой полосы с цифрами */
+.statistics {
+    padding: 30px 8%;
+    background-color: transparent; /* Оставляем сиреневый фон */
+}
+
+.stat-container {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: space-around;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03); /* Мягкая тень */
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+}
+
+.stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2D2D2D;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: #4A4A4A;
+}
+
+/* Стили для ФИОЛЕТОВОЙ полосы с контактами */
+.footer {
+    background-color: #A663F2; /* Цвет сирени из Figma */
+    color: white;
+    padding: 40px 0;
+    margin-top: 50px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.footer-item img {
+    width: 20px; /* Иконки */
+    height: 20px;
+}
+/* Стили для страницы О кафедре */
+.about-container {
+    padding: 40px 8%;
+}
+
+.breadcrumbs {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.about-content h1 {
+    font-size: 42px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.about-main-flex {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.about-text {
+    flex: 1;
+}
+
+.about-text p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    color: #444;
+    font-size: 16px;
+}
+
+.about-image img {
+    width: 450px;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* Стили для маленьких карточек внизу */
+.about-cards-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 8% 60px;
+}
+
+.mini-card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    flex: 1;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(166, 99, 242, 0.1);
+}
+
+.mini-card img {
+    width: 50px;
+    margin-bottom: 15px;
+}
+
+.mini-card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.mini-card p {
+    font-size: 13px;
+    color: #666;
+}
+.tabs {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.tab-btn {
+    padding: 10px 25px;
+    border-radius: 25px;
+    border: none;
+    background: #e0e0e0; /* Серый для неактивного */
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.tab-btn.active {
+    background: #7b46ad; /* Твой фирменный фиолетовый */
+    color: white;
+}
+
+.discipline-card {
+    background: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 15px;
+    padding: 20px 30px;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: 0.3s ease;
+}
+
+.discipline-card:hover {
+    transform: translateX(10px); /* Эффект при наведении */
+    border-color: #7b46ad;
+}
+
+:root {
+    --purple-main: #7b46ad;
+    --purple-light: #e6d8f2;
+    --tab-bg: #90899e;
+    --bg-gray: #f8f4ff;
+    --text-color: #333;
+}
+
+body {
+    font-family: 'Inter', sans-serif; /* Похож на твой шрифт */
+    margin: 0;
+    background-color: var(--bg-gray);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+.header {
+    background: #fff;
+    padding: 15px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.nav-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-text {
+    font-size: 10px;
+    font-weight: bold;
+    color: #555;
+    margin-left: 10px;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    margin: 0 15px;
+    font-size: 14px;
+}
+
+.btn-login {
+    background: var(--purple-main);
+    color: white;
+    border: none;
+    padding: 8px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* Page Titles */
+.page-title {
+    font-size: 32px;
+    margin-top: 40px;
+    margin-bottom: 5px;
+}
+
+.breadcrumbs {
+    color: rgb(154, 9, 222);
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+/* Tabs */
+.tab-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.tab {
+    padding: 10px 30px;
+    border-radius: 12px;
+    border: none;
+    background: var(--tab-bg);
+    color: rgb(250, 250, 250);
+    cursor: pointer;
+}
+
+.tab.active {
+    background: var(--purple-main);
+}
+
+/* Discipline Cards */
+.card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 22px 35px;
+    margin-bottom: 18px;
+    font-size: 18px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* Тень как в дизайне */
+    transition: 0.3s;
+}
+
+.card:hover {
+    border-color: var(--purple-main);
+    transform: scale(1.01);
+}
+
+/* Footer */
+.footer {
+    background: var(--purple-main);
+    color: white;
+    padding: 30px 0;
+    margin-top: 60px;
+}
+
+.footer-grid {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+}
+
+.footer-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
