@@ -10,19 +10,9 @@ def home():
     return "Сервер работает"
 
 
-@app.route("/login")
-def login():
-    return render_template("login.html")
-
-
-@app.route("/register")
-def register():
-    return render_template("register.html")
-
-
-@app.route("/reviews")
-def reviews():
-    return render_template("reviews.html")
+@app.route("/test")
+def test():
+    return render_template("test.html")
 
 
 if __name__ == "__main__":
