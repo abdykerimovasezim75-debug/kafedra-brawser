@@ -1,29 +1,46 @@
-from database import get_db_connection
+<!DOCTYPE html>
+<html lang="ru">
 
+<head>
 
-def add_review(username, comment):
+    <meta charset="UTF-8">
 
-    conn = get_db_connection()
-    cursor = conn.cursor()
+    <title>Отзывы</title>
 
-    cursor.execute(
-        "INSERT INTO reviews (username, comment) VALUES (?, ?)",
-        (username, comment)
-    )
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
 
-    conn.commit()
-    conn.close()
+</head>
 
+<body>
 
-def get_reviews():
+<div class="review-container">
 
-    conn = get_db_connection()
-    cursor = conn.cursor()
+    <h1>Отзывы</h1>
 
-    cursor.execute("SELECT * FROM reviews")
+    <form method="POST"
+          enctype="multipart/form-data">
 
-    reviews = cursor.fetchall()
+        <textarea
+            name="review"
+            placeholder="Напишите отзыв">
+        </textarea>
 
-    conn.close()
+        <br><br>
 
-    return reviews
+        <input type="file"
+               name="photo"
+               accept="image/*">
+
+        <br><br>
+
+        <button type="submit">
+            Отправить
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
