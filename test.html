@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
+
     <meta charset="UTF-8">
+
     <title>Тест</title>
 
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
 </head>
+
 <body>
 
 <div class="test-container">
 
-    <h2>Основы НЛП</h2>
+    <h2>Основы NLP</h2>
 
     <div class="progress">
+
         <div class="progress-bar"></div>
+
     </div>
 
     <p>Вопрос 1 из 5</p>
@@ -25,21 +33,28 @@
     <form>
 
         <label class="answer">
+
             <input type="radio" name="q1">
+
             Распознавание речи
+
         </label>
 
         <label class="answer">
-            <input type="radio" name="q1">
-            Обработка таблиц
-        </label>
 
-        <label class="answer">
             <input type="radio" name="q1">
+
             Анализ текста
+
         </label>
 
-        <br>
+        <label class="answer">
+
+            <input type="radio" name="q1">
+
+            Создание таблиц
+
+        </label>
 
         <button type="submit">
             Далее
@@ -48,6 +63,44 @@
     </form>
 
 </div>
+
+
+<!-- POPUP -->
+
+<div class="popup-overlay" id="popup">
+
+    <div class="popup-box">
+
+        <button class="close-btn"
+                onclick="closePopup()">
+            ✕
+        </button>
+
+        <h2>Здесь может быть ваша реклама</h2>
+
+        <p>
+            Разместите рекламу вашего проекта
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function closePopup() {
+
+    document.getElementById("popup").style.display = "none";
+}
+
+setTimeout(() => {
+
+    document.getElementById("popup").style.display = "flex";
+
+}, 1500);
+
+</script>
 
 </body>
 </html>
