@@ -1,106 +1,34 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-
     <meta charset="UTF-8">
-
-    <title>Тест</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='style.css') }}">
-
+    <title>Вопрос {{ q_index }} из {{ total_q }}</title>
 </head>
-
 <body>
+    <h2>Вопрос {{ q_index }} из {{ total_q }}</h2>
+    
+    <form method="POST">
+        <p><strong>{{ q.text }}</strong></p>
+        
+        {% for variant in q.variants %}
+            <label>
+                <input type="radio" name="variant" value="{{ variant }}" 
+                       {% if variant == saved_answer %}checked{% endif %}> 
+                {{ variant }}
+            </label><br><br>
+        {% endfor %}
 
-<div class="test-container">
+        <hr>
+        
+        {% if q_index > 1 %}
+            <button type="submit" name="action" value="prev">⬅ Назад</button>
+        {% endif %}
 
-    <h2>Основы NLP</h2>
-
-    <div class="progress">
-
-        <div class="progress-bar"></div>
-
-    </div>
-
-    <p>Вопрос 1 из 5</p>
-
-    <h3>
-        Что относится к задачам NLP?
-    </h3>
-
-    <form>
-
-        <label class="answer">
-
-            <input type="radio" name="q1">
-
-            Распознавание речи
-
-        </label>
-
-        <label class="answer">
-
-            <input type="radio" name="q1">
-
-            Анализ текста
-
-        </label>
-
-        <label class="answer">
-
-            <input type="radio" name="q1">
-
-            Создание таблиц
-
-        </label>
-
-        <button type="submit">
-            Далее
-        </button>
-
+        {% if q_index < total_q %}
+            <button type="submit" name="action" value="next">Далее ➡</button>
+        {% else %}
+            <button type="submit" name="action" value="submit" style="background-color: green; color: white;">Завершить тест 🏁</button>
+        {% endif %}
     </form>
-
-</div>
-
-
-<!-- POPUP -->
-
-<div class="popup-overlay" id="popup">
-
-    <div class="popup-box">
-
-        <button class="close-btn"
-                onclick="closePopup()">
-            ✕
-        </button>
-
-        <h2>Здесь может быть ваша реклама</h2>
-
-        <p>
-            Разместите рекламу вашего проекта
-        </p>
-
-    </div>
-
-</div>
-
-
-<script>
-
-function closePopup() {
-
-    document.getElementById("popup").style.display = "none";
-}
-
-setTimeout(() => {
-
-    document.getElementById("popup").style.display = "flex";
-
-}, 1500);
-
-</script>
-
 </body>
 </html>

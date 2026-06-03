@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты</title>
+</head>
+<body>
+    <h1>Результаты теста (Проверка логики под Figma)</h1>
+    
+    <h2>{{ percent }}%</h2>
+    <p><strong>{{ score }} из {{ total }}</strong> правильных ответов</p>
+    <p>⏱ <strong>Время:</strong> {{ time_spent }}</p>
+    <p>🏆 <strong>Место:</strong> {{ place }}</p>
+    <p>🧠 <strong>Уровень:</strong> {{ level }}</p>
+    
+    <hr>
+
+    <button onclick="toggleReview()" style="padding: 10px 20px; background-color: #a370f7; color: white; border: none; cursor: pointer; font-size: 16px;">
+        Посмотреть разбор 📋
+    </button>
+    
+    <a href="/logout" style="margin-left: 20px;">Пройти другой тест (Выход)</a>
+
+    <div id="advPopup" style="display: none; position: fixed; bottom: 20px; right: 20px; width: 300px; padding: 20px; background-color: #fff176; border: 2px solid #fbc02d; box-shadow: 0px 4px 10px rgba(0,0,0,0.3); z-index: 1000; font-family: sans-serif; border-radius: 8px;">
+        
+        <span onclick="closePopup()" style="position: absolute; top: 5px; right: 10px; cursor: pointer; font-weight: bold; font-size: 18px; color: #555;">&times;</span>
+        
+        <h4 style="margin-top: 0; color: #e65100;">🔥 Курс по Flask со скидкой 90%!</h4>
+        <p style="font-size: 14px; margin-bottom: 0;">Прокачай свой бэкенд до уровня Сеньора. Успей записаться, пока таймер тикает!</p>
+    </div>
+
+    <div id="review-block" style="display: none; margin-top: 30px;">
+        <h3>📋 Детальный анализ твоих ответов:</h3>
+        {% for item in report %}
+            <div style="margin-bottom: 20px; padding: 15px; border-left: 5px solid {% if item.is_correct %}#2ecc71{% else %}#e74c3c{% endif %}; background-color: #f9f9f9;">
+                <p><strong>Вопрос {{ loop.index }}:</strong> {{ item.text }}</p>
+                <p>❌ Твой ответ: <span style="color: {% if item.is_correct %}green{% else %}red{% endif %}; font-weight: bold;">{{ item.user_ans }}</span></p>
+                {% if not item.is_correct %}
+                    <p style="color: #2ecc71;">✅ Правильный ответ: <strong>{{ item.correct_ans }}</strong></p>
+                {% else %}
+                    <p style="color: #2ecc71; font-weight: bold;">✓ Отлично, это правильный ответ!</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        // 1. Функция показа и скрытия разбора
+        function toggleReview() {
+            var block = document.getElementById("review-block");
+            block.style.display = (block.style.display === "none") ? "block" : "none";
+        }
+
+        // 2. РЕКЛАМА: Показывать окно автоматически через 3 секунды (3000 миллисекунд) после загрузки страницы
+        window.onload = function() {
+            setTimeout(function() {
+                document.getElementById("advPopup").style.display = "block";
+            }, 3000);
+        };
+
+        // 3. РЕКЛАМА: Функция закрытия по клику на крестик
+        function closePopup() {
+            document.getElementById("advPopup").style.display = "none";
+        }
+    </script>
+</body>
+</html>
