@@ -1,23 +1,23 @@
-# auth_test.py (ФИНАЛЬНАЯ ПОЛНАЯ ВЕРСИЯ)
+# auth_test.py
 from flask import Blueprint, request, render_template, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
-import database_mock as database
-import time  # Для подсчета времени прохождения теста
+import database_mock  as database
+import time
 
 auth_test_bp = Blueprint('auth_test', __name__)
 
-# --- 1. АУТЕНТИФИКАЦИЯ (ПО ПОЧТЕ ИЗ FIGMA) ---
 @auth_test_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        email = request.form.get('email')  # Принимаем email вместо username
+        email = request.form.get('email')
         password = request.form.get('password')
+        role = request.form.get('role')
         
-        if not email or not password:
-            return "Заполните все поля!", 400
+        if not email or not password or not role:
+            return "Заполните все поля и выберите роль!", 400
             
         hashed_pw = generate_password_hash(password, method='scrypt')
-        database.add_user(email, hashed_pw)
+        database.add_user(email, hashed_pw, role)
         return redirect(url_for('auth_test.login'))
         
     return render_template('login.html')
@@ -32,9 +32,15 @@ def login():
         
         if user_hash and check_password_hash(user_hash, password):
             session['user'] = email
-            session['answers'] = {}        # Очищаем старые ответы перед новым тестом
-            session['start_time'] = time.time()  # Включаем секундомер
-            return redirect(url_for('auth_test.test_page', q_index=1))
+            user_role = database.get_user_role(email)
+            
+            # Разводка ролей: преподаватель идет в личный кабинет, студент на тест
+            if user_role == 'teacher':
+                return redirect(url_for('auth_test.teacher_dashboard'))
+            else:
+                session['answers'] = {}
+                session['start_time'] = time.time()
+                return redirect(url_for('auth_test.test_page', q_index=1))
             
         return "Неверная почта или пароль!", 401
         
@@ -42,11 +48,9 @@ def login():
 
 @auth_test_bp.route('/logout')
 def logout():
-    session.clear()  # Полностью очищаем сессию при выходе
+    session.clear()
     return redirect(url_for('auth_test.login'))
 
-
-# --- 2. ПОСТРАНИЧНЫЙ ТЕСТ (1 ВОПРОС НА СТРАНИЦУ) ---
 @auth_test_bp.route('/test/<int:q_index>', methods=['GET', 'POST'])
 def test_page(q_index):
     if 'user' not in session:
@@ -55,7 +59,6 @@ def test_page(q_index):
     questions = database.get_test_questions()
     total_q = len(questions)
 
-    # Защита от выхода за пределы (если ввели /test/99)
     if q_index < 1 or q_index > total_q:
         return redirect(url_for('auth_test.test_page', q_index=1))
 
@@ -68,9 +71,8 @@ def test_page(q_index):
                 session['answers'] = {}
             answers = session['answers']
             answers[current_question['id']] = selected_variant
-            session['answers'] = answers  # Сохраняем выбор в сессию
+            session['answers'] = answers
 
-        # Логика кнопок перемещения
         action = request.form.get('action')
         if action == 'next':
             return redirect(url_for('auth_test.test_page', q_index=q_index + 1))
@@ -79,7 +81,6 @@ def test_page(q_index):
         elif action == 'submit':
             return redirect(url_for('auth_test.test_result'))
 
-    # Вытаскиваем ответ, если ученик тут уже был, чтобы галочка не слетала
     saved_answer = session.get('answers', {}).get(current_question['id'], '')
 
     return render_template(
@@ -90,23 +91,19 @@ def test_page(q_index):
         saved_answer=saved_answer
     )
 
-
-# --- 3. СТРАНИЦА РЕЗУЛЬТАТОВ И РАЗБОРА ОШИБОК (ДЛЯ FIGMA) ---
 @auth_test_bp.route('/test/result')
 def test_result():
     if 'user' not in session: 
         return redirect(url_for('auth_test.login'))
 
-    # Подсчет времени
     end_time = time.time()
     start_time = session.get('start_time', end_time)
     duration_seconds = int(end_time - start_time)
     
     minutes = duration_seconds // 60
     seconds = duration_seconds % 60
-    time_str = f"{minutes:02d}:{seconds:02d}"  # Формат 18:32 как на макете
+    time_str = f"{minutes:02d}:{seconds:02d}"
 
-    # Проверка ответов
     questions = database.get_test_questions()
     total_q = len(questions)
     user_answers = session.get('answers', {})
@@ -127,7 +124,6 @@ def test_result():
             "is_correct": is_correct
         })
 
-    # Расчет процентов и уровня для Figma
     percent = int((score / total_q) * 100) if total_q > 0 else 0
     
     if percent < 40:
@@ -137,10 +133,7 @@ def test_result():
     else:
         level = "Продвинутый"
 
-    # Заглушка для места в рейтинге
     leaderboard_place = "3 из 27"
-
-    # Сохраняем в бэкап базы данных
     database.save_test_result(session['user'], score)
 
     return render_template(
@@ -153,3 +146,23 @@ def test_result():
         level=level,
         report=report
     )
+
+@auth_test_bp.route('/teacher/dashboard')
+def teacher_dashboard():
+    if 'user' not in session:
+        return redirect(url_for('auth_test.login'))
+        
+    user_role = database.get_user_role(session['user'])
+    if user_role != 'teacher':
+        return "Доступ запрещен! Вы не преподаватель.", 403
+        
+    return f"""
+        <body style="font-family: sans-serif; padding: 20px;">
+            <h1>🎓 Панель преподавателя ИИТ КГТУ</h1>
+            <p>Добро пожаловать, <strong>{session['user']}</strong>!</p>
+            <hr>
+            <h3>Панель управления в разработке (Здесь будут оценки от Backend №2)</h3>
+            <br>
+            <a href="/logout">Выйти из системы</a>
+        </body>
+    """

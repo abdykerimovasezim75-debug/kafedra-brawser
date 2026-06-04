@@ -1,18 +1,64 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация и Вход</title>
+</head>
+<body style="font-family: sans-serif; padding: 20px; display: flex; justify-content: center; background-color: #f5f5f5;">
 
-{% block content %}
-<h1>Login</h1>
+    <div id="register-block" style="padding: 30px; border: 1px solid #ccc; max-width: 400px; width: 100%; border-radius: 10px; background-color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <h2 style="margin-top: 0;">Регистрация</h2>
+        <form action="/register" method="POST">
+            <input type="email" name="email" placeholder="Электронная почта" style="width: 95%; padding: 12px; margin-bottom: 15px; border-radius: 20px; border: 1px solid #ccc; font-size: 14px;" required>
+            <br>
+            <input type="password" name="password" placeholder="Введите пароль" style="width: 95%; padding: 12px; margin-bottom: 15px; border-radius: 20px; border: 1px solid #ccc; font-size: 14px;" required>
+            <br>
+            
+            <div style="margin-bottom: 25px; text-align: center;">
+                <label style="background-color: #ba68c8; color: white; padding: 8px 18px; border-radius: 20px; margin-right: 10px; cursor: pointer; display: inline-block; font-size: 14px;">
+                    <input type="radio" name="role" value="teacher" required> Преподаватель
+                </label>
+                <label style="background-color: #ba68c8; color: white; padding: 8px 18px; border-radius: 20px; cursor: pointer; display: inline-block; font-size: 14px;">
+                    <input type="radio" name="role" value="student" checked required> Студент
+                </label>
+            </div>
+            
+            <button type="submit" style="background-color: #ba68c8; color: white; padding: 12px; border: none; cursor: pointer; border-radius: 20px; width: 100%; font-size: 16px; font-weight: bold; margin-bottom: 20px;">
+                Зарегистрироваться
+            </button>
+        </form>
 
-<a href="/">Главная</a>
+        <div style="text-align: center; font-size: 14px; color: #555;">
+            Already have an account? <span onclick="showLogin()" style="color: #ba68c8; cursor: pointer; font-weight: bold; text-decoration: underline;">Войти</span>
+        </div>
+    </div>
 
-<form method="POST">
-    <input type="text" name="username" placeholder="Логин" required>
-    <input type="password" name="password" placeholder="Пароль" required>
+    <div id="login-block" style="display: none; padding: 30px; border: 1px solid #ccc; max-width: 400px; width: 100%; border-radius: 10px; background-color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        <h2 style="margin-top: 0;">Вход в систему</h2>
+        <form action="/login" method="POST">
+            <input type="email" name="email" placeholder="Электронная почта" style="width: 95%; padding: 12px; margin-bottom: 15px; border-radius: 20px; border: 1px solid #ccc; font-size: 14px;" required>
+            <br>
+            <input type="password" name="password" placeholder="Введите пароль" style="width: 95%; padding: 12px; margin-bottom: 20px; border-radius: 20px; border: 1px solid #ccc; font-size: 14px;" required>
+            <br>
+            <button type="submit" style="background-color: #ba68c8; color: white; padding: 12px; border: none; cursor: pointer; border-radius: 20px; width: 100%; font-size: 16px; font-weight: bold; margin-bottom: 20px;">
+                Войти
+            </button>
+        </form>
 
-    <button type="submit">Войти</button>
-</form>
+        <div style="text-align: center; font-size: 14px; color: #555;">
+            Don't have an account? <span onclick="showRegister()" style="color: #ba68c8; cursor: pointer; font-weight: bold; text-decoration: underline;">Зарегистрироваться</span>
+        </div>
+    </div>
 
-<p>Нет аккаунта?</p>
-<a href="/register">Зарегистрироваться</a>
-
-{% endblock %}
+    <script>
+        function showLogin() {
+            document.getElementById('register-block').style.display = 'none';
+            document.getElementById('login-block').style.display = 'block';
+        }
+        function showRegister() {
+            document.getElementById('login-block').style.display = 'none';
+            document.getElementById('register-block').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

@@ -15,18 +15,28 @@ TESTS_TABLE = [
     {"id": "q10", "text": "Какое расширение файла по умолчанию используется для SQLite базы данных?", "variants": [".db", ".py", ".html"], "correct": ".db"}
 ]
 
-def add_user(username, password_hash):
-    USERS_TABLE[username] = password_hash
-    print(f"[БД] Пользователь {username} сохранен.")
+def add_user(username, password_hash, role="student"):
+    USERS_TABLE[username] = {
+        "password_hash": password_hash,
+        "role": role
+    }
+    print(f"[БД LOG] Пользователь {username} зарегистрирован как [{role}].")
     return True
 
 def get_user_password(username):
-    return USERS_TABLE.get(username)
+    user_data = USERS_TABLE.get(username)
+    if user_data:
+        return user_data["password_hash"]
+    return None
+
+def get_user_role(username):
+    user_data = USERS_TABLE.get(username)
+    return user_data["role"] if user_data else None
 
 def get_test_questions():
     return TESTS_TABLE
 
 def save_test_result(username, score):
     RESULTS_TABLE[username] = score
-    print(f"[БД] Результат {username}: {score} из 10 сохранен.")
+    print(f"[БД LOG] Результат {username}: {score} баллов сохранен.")
     return True
