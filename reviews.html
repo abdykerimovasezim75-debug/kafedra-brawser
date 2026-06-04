@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Отзывы</h1>
+
+<a href="/">Главная</a>
+
+{% if session.get("user") %}
+<form method="POST">
+
+    <textarea
+        name="review"
+        placeholder="Напишите отзыв..."
+        required>
+    </textarea>
+
+    <br><br>
+
+    <button type="submit">
+        Отправить отзыв
+    </button>
+
+</form>
+
+<hr>
+
+{% endif %}
+
+{% for review in reviews %}
+
+<div style="border:1px solid #ccc; padding:10px; margin:10px;">
+
+    <h4>Аноним</h4>
+
+    <p>{{ review[2] }}</p>
+
+    <small>{{ review[3] }}</small>
+
+    <br><br>
+
+    <a href="/like/{{ review[0] }}">
+        👍 {{ review[4] }}
+    </a>
+
+    {% if review[1] == session.get("user") %}
+        |
+        <a href="/delete/{{ review[0] }}">
+            🗑 Удалить
+        </a>
+    {% endif %}
+
+</div>
+
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Дисциплины</h1>
+
+<a href="/">Главная</a>
+
+<br><br>
+
+<button onclick="showBachelor()">
+    Бакалавриат
+</button>
+
+<button onclick="showMaster()">
+    Магистратура
+</button>
+
+<br><br>
+
+<div id="bachelor">
+
+    <p>Введение в объектно-ориентированное программирование</p>
+
+    <p>Статистический машинный перевод</p>
+
+    <p>Введение в информационный поиск</p>
+
+    <p>Основы языка Python</p>
+
+    <p>Основы теории и практики машинного перевода</p>
+
+</div>
+
+<div id="master" style="display:none;">
+
+    <p>Математические модели языка</p>
+
+    <p>Обработка естественного языка (NLP)</p>
+
+    <p>Автоматический перевод и кросс-языковые системы</p>
+
+    <p>Корпусная лингвистика и извлечение данных</p>
+
+    <p>Семантический анализ и онтологии</p>
+
+</div>
+
+<script>
+function showBachelor() {
+    document.getElementById("bachelor").style.display = "block";
+    document.getElementById("master").style.display = "none";
+}
+
+function showMaster() {
+    document.getElementById("bachelor").style.display = "none";
+    document.getElementById("master").style.display = "block";
+}
+</script>
+
+{% endblock %}

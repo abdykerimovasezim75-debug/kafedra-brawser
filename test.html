@@ -1,34 +1,13 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Вопрос {{ q_index }} из {{ total_q }}</title>
-</head>
-<body>
-    <h2>Вопрос {{ q_index }} из {{ total_q }}</h2>
-    
-    <form method="POST">
-        <p><strong>{{ q.text }}</strong></p>
-        
-        {% for variant in q.variants %}
-            <label>
-                <input type="radio" name="variant" value="{{ variant }}" 
-                       {% if variant == saved_answer %}checked{% endif %}> 
-                {{ variant }}
-            </label><br><br>
-        {% endfor %}
+{% extends "base.html" %}
 
-        <hr>
-        
-        {% if q_index > 1 %}
-            <button type="submit" name="action" value="prev">⬅ Назад</button>
-        {% endif %}
+{% block content %}
 
-        {% if q_index < total_q %}
-            <button type="submit" name="action" value="next">Далее ➡</button>
-        {% else %}
-            <button type="submit" name="action" value="submit" style="background-color: green; color: white;">Завершить тест 🏁</button>
-        {% endif %}
-    </form>
-</body>
-</html>
+<h1>Тестирование</h1>
+
+<a href="/">Главная</a>
+
+{% if result %}
+    <h2>{{ result }}</h2>
+{% endif %}
+
+{% endblock %}

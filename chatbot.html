@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="chat-container">
+
+    <div class="bot-message">
+        Привет!
+        Я бот-помощник кафедры компьютерной лингвистики.
+        Чем могу помочь?
+    </div>
+
+    {% if user_message %}
+    <div class="user-message">
+        {{ user_message }}
+    </div>
+    {% endif %}
+
+    {% if response %}
+    <div class="bot-message">
+        {{ response }}
+    </div>
+    {% endif %}
+
+    <form method="POST" class="chat-form">
+        <input type="text" name="message"
+               placeholder="Введите вопрос..." required>
+
+        <button type="submit">➤</button>
+    </form>
+
+</div>
+
+{% endblock %}

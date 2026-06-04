@@ -1,34 +1,18 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Регистрация и Вход</title>
-</head>
-<body>
-    <div style="margin-bottom: 40px; padding: 20px; border: 1px solid #ccc; max-width: 400px;">
-        <h2>Регистрация</h2>
-        <form action="/register" method="POST">
-            <input type="email" name="email" placeholder="Электронная почта" style="width: 100%; padding: 10px; margin-bottom: 10px;" required>
-            <br>
-            <input type="password" name="password" placeholder="Введите пароль" style="width: 100%; padding: 10px; margin-bottom: 15px;" required>
-            <br>
-            <button type="submit" style="background-color: #ba68c8; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 20px; width: 100%;">
-                Зарегистрироваться
-            </button>
-        </form>
-    </div>
+{% extends "base.html" %}
 
-    <div style="padding: 20px; border: 1px solid #ccc; max-width: 400px;">
-        <h2>Вход в систему</h2>
-        <form action="/login" method="POST">
-            <input type="email" name="email" placeholder="Электронная почта" style="width: 100%; padding: 10px; margin-bottom: 10px;" required>
-            <br>
-            <input type="password" name="password" placeholder="Введите пароль" style="width: 100%; padding: 10px; margin-bottom: 15px;" required>
-            <br>
-            <button type="submit" style="background-color: #ba68c8; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 20px; width: 100%;">
-                Войти
-            </button>
-        </form>
-    </div>
-</body>
-</html>
+{% block content %}
+<h1>Login</h1>
+
+<a href="/">Главная</a>
+
+<form method="POST">
+    <input type="text" name="username" placeholder="Логин" required>
+    <input type="password" name="password" placeholder="Пароль" required>
+
+    <button type="submit">Войти</button>
+</form>
+
+<p>Нет аккаунта?</p>
+<a href="/register">Зарегистрироваться</a>
+
+{% endblock %}
