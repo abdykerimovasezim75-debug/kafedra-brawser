@@ -107,7 +107,7 @@ def chatbot():
 @app.route("/reviews", methods=["GET", "POST"])
 def reviews():
 
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect("database/databasefama.db")
     cursor = conn.cursor()
 
     if request.method == "POST":
@@ -156,7 +156,7 @@ def reviews():
  
 @app.route("/like/<int:id>")
 def like(id):
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect("database/databasefama.db")
     cursor = conn.cursor()
 
     cursor.execute(
@@ -175,7 +175,7 @@ def delete(id):
     if "user" not in session:
         return redirect(url_for("login"))
 
-    conn = sqlite3.connect("database/database.db")
+    conn = sqlite3.connect("database/databasefama.db")
     cursor = conn.cursor()
 
     if session.get("role") == "admin":
@@ -200,7 +200,7 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
-        conn = sqlite3.connect("database/database.db")
+        conn = sqlite3.connect("database/databasefama.db")
         cursor = conn.cursor()
 
         cursor.execute(
@@ -231,7 +231,7 @@ def register():
         password = request.form["password"]
         role = request.form["role"]
 
-        conn = sqlite3.connect("database/database.db")
+        conn = sqlite3.connect("database/databasefama.db")
         cursor = conn.cursor()
 
         cursor.execute(
