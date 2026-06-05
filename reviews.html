@@ -4,16 +4,21 @@
 
 <h1>Отзывы</h1>
 
+
 <a href="/">Главная</a>
 
 {% if session.get("user") %}
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 
     <textarea
         name="review"
         placeholder="Напишите отзыв..."
         required>
     </textarea>
+
+    <br><br>
+
+    <input type="file" name="photo" accept="image/*">
 
     <br><br>
 
@@ -33,7 +38,16 @@
 
     <h4>Аноним</h4>
 
+
     <p>{{ review[2] }}</p>
+
+    {% if review[5] %}
+    <br>
+    <img src="{{ url_for('static', filename='uploads/' + review[5]) }}"
+         width="250"
+         style="border-radius:10px;">
+    <br><br>
+{% endif %}
 
     <small>{{ review[3] }}</small>
 
@@ -43,13 +57,12 @@
         👍 {{ review[4] }}
     </a>
 
-    {% if review[1] == session.get("user") %}
-        |
-        <a href="/delete/{{ review[0] }}">
-            🗑 Удалить
-        </a>
-    {% endif %}
-
+{% if review[1] == session.get("user") or session.get("role") == "admin" %}
+    |
+    <a href="/delete/{{ review[0] }}">
+        🗑 Удалить
+    </a>
+{% endif %} 
 </div>
 
 {% endfor %}
