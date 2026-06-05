@@ -1,7 +1,7 @@
 import sqlite3
 
 
-conn = sqlite3.connect("database/database.db")
+conn = sqlite3.connect("database/databasefama.db")
 cursor = conn.cursor()
 
 
