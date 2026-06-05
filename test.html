@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Тестирование</h1>
+
+<a href="/">Главная</a>
+
+{% if result %}
+    <h2>{{ result }}</h2>
+{% endif %}
+
+{% endblock %}
