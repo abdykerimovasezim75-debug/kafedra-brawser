@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация / Вход — Компьютерная лингвистика</title>
+</head>
+<body style="font-family: sans-serif; background-color: #eaddf7; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh;">
+
+    <div style="flex: 1; display: flex; flex-direction: column;">
+        
+        <div style="background: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e0b0ff;">
+            <span style="font-weight: bold; color: #4a148c; font-size: 12px; line-height: 1.3;">ИНСТИТУТ ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ<br><small style="color: #777; font-size: 10px;">КАФЕДРА КОМПЬЮТЕРНОЙ ЛИНГВИСТИКИ</small></span>
+            <div style="display: flex; gap: 20px; font-size: 12px; color: #333; font-weight: 500;">
+                <span>Дисциплины</span><span>Преподаватели</span><span>Новости</span><span>Отзывы</span><span>Бот-помощник</span><span>Тестирование</span>
+            </div>
+        </div>
+
+        <div style="max-width: 800px; width: 100%; margin: 40px auto; padding: 0 20px; box-sizing: border-box;">
+            
+            <h1 id="page-title" style="color: #000; font-size: 32px; margin: 0 0 5px 0; font-weight: bold;">Регистрация</h1>
+            <p id="page-breadcrumbs" style="color: #777; font-size: 14px; margin: 0 0 30px 0;">Главная/Регистрация</p>
+
+            <div style="background: white; border-radius: 20px; padding: 50px 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); max-width: 550px; margin: 0 auto; box-sizing: border-box; text-align: center;">
+                
+                <div id="register-block">
+                    <form action="/register" method="POST">
+                        <input type="email" name="email" placeholder="Электронная почта" style="width: 100%; padding: 14px 25px; margin-bottom: 20px; border-radius: 15px; border: none; background-color: #e1bee7; box-sizing: border-box; font-size: 15px; color: #4a148c; font-weight: 500;" required>
+                        <input type="password" name="password" placeholder="Введите пароль" style="width: 100%; padding: 14px 25px; margin-bottom: 25px; border-radius: 15px; border: none; background-color: #e1bee7; box-sizing: border-box; font-size: 15px; color: #4a148c; font-weight: 500;" required>
+                        
+                        <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 35px;">
+                            <label style="position: relative; cursor: pointer;">
+                                <input type="radio" name="role" value="teacher" style="display: none;" onchange="updateRoleStyles()">
+                                <span id="btn-teacher" style="display: inline-block; padding: 10px 25px; border-radius: 20px; font-size: 14px; font-weight: bold; background: #ce93d8; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">Преподаватель</span>
+                            </label>
+                            <label style="position: relative; cursor: pointer;">
+                                <input type="radio" name="role" value="student" checked style="display: none;" onchange="updateRoleStyles()">
+                                <span id="btn-student" style="display: inline-block; padding: 10px 35px; border-radius: 20px; font-size: 14px; font-weight: bold; background: #ba68c8; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">Студент</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" style="background-color: #ba68c8; color: white; border: none; padding: 14px 40px; border-radius: 15px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.15); margin-bottom: 30px;">Зарегистрироваться</button>
+                    </form>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; color: #333;">
+                        <span style="font-size: 20px;">👤</span> Уже есть аккаунт? <span onclick="toggleAuth(true)" style="color: #7b1fa2; cursor: pointer; font-weight: bold; text-decoration: none;">Войти</span>
+                    </div>
+                </div>
+
+                <div id="login-block" style="display: none;">
+                    <form action="/login" method="POST">
+                        <input type="email" name="email" placeholder="Электронная почта" style="width: 100%; padding: 14px 25px; margin-bottom: 20px; border-radius: 15px; border: none; background-color: #e1bee7; box-sizing: border-box; font-size: 15px; color: #4a148c; font-weight: 500;" required>
+                        <input type="password" name="password" placeholder="Введите пароль" style="width: 100%; padding: 14px 25px; margin-bottom: 35px; border-radius: 15px; border: none; background-color: #e1bee7; box-sizing: border-box; font-size: 15px; color: #4a148c; font-weight: 500;" required>
+                        
+                        <button type="submit" style="background-color: #ba68c8; color: white; border: none; padding: 14px 50px; border-radius: 15px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.15); margin-bottom: 30px;">Войти</button>
+                    </form>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 16px; color: #333;">
+                        Еще нет аккаунта? <span onclick="toggleAuth(false)" style="color: #7b1fa2; cursor: pointer; font-weight: bold; text-decoration: none;">Создать аккаунт</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div style="background-color: #512da8; color: white; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; font-size: 13px;">
+        <div style="display: flex; align-items: center; gap: 8px;">📍 <span>ул. Ч.Айтматова 66</span></div>
+        <div style="display: flex; align-items: center; gap: 8px;">📞 <span>+996 555 033 532</span></div>
+        <div style="display: flex; align-items: center; gap: 8px;">✉️ <span>kstuinfo@gmail.com</span></div>
+        <div style="display: flex; align-items: center; gap: 8px;">📸 <span>kstu.kg<br>studlife.kstu</span></div>
+    </div>
+
+    <script>
+        // Переключение между Входом и Регистрацией
+        function toggleAuth(showLogin) {
+            const loginBlock = document.getElementById('login-block');
+            const regBlock = document.getElementById('register-block');
+            const title = document.getElementById('page-title');
+            const breadcrumbs = document.getElementById('page-breadcrumbs');
+
+            if (showLogin) {
+                loginBlock.style.display = 'block';
+                regBlock.style.display = 'none';
+                title.textContent = 'Авторизация';
+                breadcrumbs.textContent = 'Главная/Авторизация';
+            } else {
+                loginBlock.style.display = 'none';
+                regBlock.style.display = 'block';
+                title.textContent = 'Регистрация';
+                breadcrumbs.textContent = 'Главная/Регистрация';
+            }
+        }
+
+        // Подсветка выбранной роли (Преподаватель или Студент) как кнопка
+        function updateRoleStyles() {
+            const isTeacher = document.querySelector('input[name="role"]:checked').value === 'teacher';
+            const btnTeacher = document.getElementById('btn-teacher');
+            const btnStudent = document.getElementById('btn-student');
+
+            if (isTeacher) {
+                btnTeacher.style.backgroundColor = '#ba68c8'; // Яркий фиолетовый
+                btnStudent.style.backgroundColor = '#ce93d8'; // Светлый
+            } else {
+                btnTeacher.style.backgroundColor = '#ce93d8'; // Светлый
+                btnStudent.style.backgroundColor = '#ba68c8'; // Яркий фиолетовый
+            }
+        }
+        
+        // Запустить первичный стиль ролей при загрузке
+        updateRoleStyles();
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Ваш результат</title>
+</head>
+<body style="font-family: sans-serif; background-color: #f5edfa; text-align: center; padding: 40px 20px;">
+
+    <div style="background: white; max-width: 480px; margin: 0 auto; padding: 40px; border-radius: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); position: relative;">
+        <h2 style="color: #333; margin-top: 0;">Результаты теста</h2>
+        <span style="font-size: 60px; display: block; margin: 10px 0;">🏆</span>
+        <h3 style="color: #d500f9; margin: 0 0 5px 0;">Тест успешно завершен!</h3>
+        
+        <h1 style="font-size: 60px; color: #333; margin: 15px 0 0 0;">{{ percent }}%</h1>
+        <p style="color: #666; font-size: 15px; margin-top: 5px;">Вы ответили правильно на <strong>{{ score }} из {{ total }}</strong> вопросов.</p>
+
+        <div style="display: flex; justify-content: space-around; background: #fafafa; border: 1px solid #f0e0ff; padding: 15px; border-radius: 15px; margin: 30px 0; font-size: 14px;">
+            <div><p style="margin:0; color:#aaa; font-size:11px;">ВРЕМЯ</p><strong>{{ time_spent }}</strong></div>
+            <div style="border-left: 1px solid #e0b0ff; border-right: 1px solid #e0b0ff; padding: 0 25px;"><p style="margin:0; color:#aaa; font-size:11px;">МЕСТО</p><strong>{{ place }}</strong></div>
+            <div><p style="margin:0; color:#aaa; font-size:11px;">УРОВЕНЬ</p><strong>{{ level }}</strong></div>
+        </div>
+
+        <button onclick="toggleReport()" style="background: #ba68c8; color: white; border: none; width: 100%; padding: 14px; border-radius: 12px; font-weight: bold; font-size: 15px; cursor: pointer; margin-bottom: 12px;">Посмотреть разбор ошибок</button>
+        <button onclick="location.href='/categories'" style="background: white; color: #d500f9; border: 1px solid #d500f9; width: 100%; padding: 14px; border-radius: 12px; font-weight: bold; font-size: 15px; cursor: pointer;">К списку категорий</button>
+    </div>
+
+    <!-- ВСПЛЫВАЮЩИЙ РЕКЛАМНЫЙ БАННЕР КУРСОВ (УМНАЯ МОНЕТИЗАЦИЯ) -->
+    <div id="advPopup" style="display: none; position: fixed; bottom: 25px; right: 25px; width: 330px; padding: 20px; background-color: #fffde7; border: 2px solid #fbc02d; box-shadow: 0px 5px 20px rgba(0,0,0,0.15); z-index: 9999; border-radius: 15px; text-align: left;">
+        <span onclick="this.parentElement.style.display='none'" style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-weight: bold; font-size: 20px; color: #777;">&times;</span>
+        <h4 style="margin: 0 0 8px 0; color: #e65100; font-size: 15px;">🔥 Интенсив по NLP & Трансформерам со скидкой 90%!</h4>
+        <p style="font-size: 12px; color: #444; margin: 0 0 15px 0; line-height: 1.4;">Углубитесь в разработку чат-ботов, языковых моделей и парсеров на продвинутом курсе кафедры компьютерной лингвистики.</p>
+        <button onclick="alert('🎉 Заявка отправлена! Скидка закреплена за вашим аккаунтом.')" style="background: #e65100; color: white; border: none; padding: 8px 16px; font-size: 12px; font-weight: bold; border-radius: 8px; cursor: pointer;">Записаться со скидкой</button>
+    </div>
+
+    <!-- БЛОК АНАЛИЗА ОШИБОК -->
+    <div id="report-block" style="display: none; max-width: 480px; margin: 25px auto; background: white; padding: 25px; border-radius: 20px; text-align: left; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <h3 style="margin-top:0; color:#333; border-bottom:1px solid #eee; padding-bottom:10px;">Разбор ответов:</h3>
+        {% for item in report %}
+            <div style="margin-bottom: 15px; padding: 12px; border-left: 4px solid {% if item.is_correct %}#2ecc71{% else %}#e74c3c{% endif %}; background: #fafafa; border-radius: 0 8px 8px 0; font-size: 13px;">
+                <p style="margin: 0 0 5px 0; font-weight: bold;">{{ loop.index }}. {{ item.text }}</p>
+                <p style="margin:0;">Ваш ответ: <strong style="color: {% if item.is_correct %}#27ae60{% else %}#c0392b{% endif %};">{{ item.user_ans }}</strong></p>
+                {% if not item.is_correct %}
+                    <p style="margin:3px 0 0 0; color:#27ae60;">Правильный: <strong>{{ item.correct_ans }}</strong></p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function toggleReport() {
+            var block = document.getElementById('report-block');
+            block.style.display = (block.style.display === 'none') ? 'block' : 'none';
+        }
+        // Баннер вылетает через 3 секунды после открытия результатов
+        setTimeout(() => { document.getElementById('advPopup').style.display = 'block'; }, 3000);
+    </script>
+</body>
+</html>

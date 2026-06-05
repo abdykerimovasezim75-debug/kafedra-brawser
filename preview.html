@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ meta.title }} — Превью</title>
+</head>
+<body style="font-family: sans-serif; background-color: #f5edfa; margin: 0; padding-bottom: 40px;">
+
+    <div style="background: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e0b0ff; margin-bottom: 40px;">
+        <span style="font-weight: bold; color: #4a148c; font-size: 14px;">ИНСТИТУТ ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ<br><small style="color: #777;">КАФЕДРА КОМПЬЮТЕРНОЙ ЛИНГВИСТИКИ</small></span>
+        <a href="/categories" style="color: #d500f9; text-decoration: none; font-weight: bold; font-size: 14px;">Назад к темам</a>
+    </div>
+
+    <div style="max-width: 500px; margin: 0 auto; background: white; padding: 40px 30px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center;">
+        <div style="font-size: 50px; margin-bottom: 10px; color: #ba68c8;">💬</div>
+        <h2 style="color: #333; margin: 10px 0;">{{ meta.title }}</h2>
+        <p style="color: #666; font-size: 14px; line-height: 1.5; margin-bottom: 30px;">{{ meta.desc }}</p>
+
+        <!-- Список параметров из Figma (image_13.png) -->
+        <div style="text-align: left; max-width: 320px; margin: 0 auto 35px auto; line-height: 2.2; color: #444; font-size: 15px;">
+            <div style="display: flex; align-items: center;">📝 <span style="margin-left: 15px;"><strong>{{ meta.count }} вопросов</strong></span></div>
+            <div style="display: flex; align-items: center;">⏱ <span style="margin-left: 15px;"><strong>{{ meta.time }} минут</strong></span></div>
+            <div style="display: flex; align-items: center;">🧠 <span style="margin-left: 15px;">Базовый уровень</span></div>
+            <div style="display: flex; align-items: center;">🎓 <span style="margin-left: 15px;">Теоретические знания</span></div>
+        </div>
+
+        <div style="text-align: left; max-width: 320px; margin: 0 auto 40px auto; border-top: 1px dashed #e0b0ff; padding-top: 20px;">
+            <strong style="color: #333; font-size: 14px; display: block; margin-bottom: 10px;">Вы освоите:</strong>
+            <ul style="margin: 0; padding-left: 20px; font-size: 13px; color: #555; line-height: 1.8;">
+                <li>Ключевые понятия дисциплины</li>
+                <li>Основные задачи и подходы</li>
+                <li>Типы языковых ресурсов</li>
+            </ul>
+        </div>
+
+        <!-- Кнопка железобетонного старта без JS-багов -->
+        <a href="/test/start/{{ category_id }}" style="display: block; background: #d500f9; color: white; text-decoration: none; padding: 14px 0; border-radius: 25px; font-size: 16px; font-weight: bold; width: 100%; box-shadow: 0 4px 10px rgba(213,0,249,0.2);">
+            Начать тест
+        </a>
+    </div>
+</body>
+</html>

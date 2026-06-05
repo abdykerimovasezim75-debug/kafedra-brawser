@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Тестирование — Вопрос {{ q_index }}</title>
+</head>
+<body style="font-family: sans-serif; background-color: #f5edfa; margin: 0; padding-bottom: 40px;">
+
+    <div style="background: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e0b0ff; margin-bottom: 40px;">
+        <span style="font-weight: bold; color: #4a148c; font-size: 14px;">ИНСТИТУТ ИНФОРМАЦИОННЫХ ТЕХНОЛОГИЙ<br><small style="color: #777;">КАФЕДРА КОМПЬЮТЕРНОЙ ЛИНГВИСТИКИ</small></span>
+        <span style="font-weight: bold; color: #333;">Модуль: {{ category_title.upper() }}</span>
+    </div>
+
+    <div style="max-width: 650px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        
+        <!-- Информационная строка из Figma -->
+        <div style="display: flex; justify-content: space-between; color: #666; font-size: 13px; margin-bottom: 30px; font-weight: bold;">
+            <span>Вопрос {{ q_index }} из {{ total_q }}</span>
+            <span style="color: #ba68c8;">⏱ <span id="countdown">{{ timer_string }}</span></span>
+        </div>
+
+        <form id="testForm" method="POST">
+            <!-- Текст вопроса из Figma -->
+            <p style="font-size: 18px; font-weight: bold; color: #333; line-height: 1.5; margin-bottom: 10px;">{{ q.text }}</p>
+            <span style="font-size: 11px; color: #aaa; display: block; margin-bottom: 25px;">Выберите один правильный ответ:</span>
+            
+            <!-- Стилизованные варианты ответов как на image_14.png -->
+            {% for variant in q.variants %}
+                <label style="display: block; background: white; padding: 16px 20px; border: 1px solid {% if variant == saved_answer %}#d500f9{% else %}#e0b0ff{% endif %}; margin-bottom: 15px; border-radius: 12px; cursor: pointer; transition: 0.2s; display: flex; align-items: center;">
+                    <input type="radio" name="variant" value="{{ variant }}" {% if variant == saved_answer %}checked{% endif %} style="accent-color: #d500f9; width: 18px; height: 18px; margin-right: 15px;"> 
+                    <span style="font-size: 14px; color: #333;">{{ variant }}</span>
+                </label>
+            {% endfor %}
+
+            <!-- Кнопки управления из Figma -->
+            <div style="display: flex; justify-content: space-between; margin-top: 40px;">
+                {% if q_index > 1 %}
+                    <button type="submit" name="action" value="prev" style="background: white; border: 1px solid #e0b0ff; color: #666; padding: 12px 35px; font-weight: bold; font-size: 14px; border-radius: 10px; cursor: pointer;">Назад</button>
+                {% else %}
+                    <div></div>
+                {% endif %}
+
+                <button type="submit" name="action" value="next" style="background: #d500f9; border: none; color: white; padding: 12px 45px; font-weight: bold; font-size: 14px; border-radius: 10px; cursor: pointer;">
+                    {% if q_index == total_q %}Завершить{% else %}Далее{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Защищенный скрипт таймера -->
+    <script>
+        let secondsLeft = {{ time_left_seconds }};
+        const countdownEl = document.getElementById('countdown');
+        const timer = setInterval(() => {
+            secondsLeft--;
+            if (secondsLeft <= 0) {
+                clearInterval(timer);
+                alert("Время вышло! Результаты отправляются на сервер.");
+                const hiddenInput = document.createElement('input');
+                hiddenInput.type = 'hidden'; name = 'action'; value = 'submit';
+                document.getElementById('testForm').appendChild(hiddenInput);
+                document.getElementById('testForm').submit();
+            } else {
+                let mins = Math.floor(secondsLeft / 60);
+                let secs = secondsLeft % 60;
+                countdownEl.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
