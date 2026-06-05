@@ -1,18 +1,15 @@
-{% extends "base.html" %}
-
-{% block content %}
-<h1>Login</h1>
-
-<a href="/">Главная</a>
-
-<form method="POST">
-    <input type="text" name="username" placeholder="Логин" required>
-    <input type="password" name="password" placeholder="Пароль" required>
-
-    <button type="submit">Войти</button>
-</form>
-
-<p>Нет аккаунта?</p>
-<a href="/register">Зарегистрироваться</a>
-
-{% endblock %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+</head>
+<body>
+    <h2>Вход в систему</h2>
+    <form method="POST">
+        <input type="email" name="email" placeholder="Электронная почта" required>
+        <button type="submit">Войти</button>
+    </form>
+    <p><a href="{{ url_for('register') }}">Еще нет аккаунта? Зарегистрироваться</a></p>
+</body>
+</html>

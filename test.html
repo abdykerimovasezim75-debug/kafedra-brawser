@@ -1,13 +1,89 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Тестирование — {{ category }}</title>
+    <style>
+        body { background-color: #F8F0FF; font-family: 'Segoe UI', sans-serif; padding: 20px; }
+        .card { background: white; padding: 30px; border-radius: 20px; max-width: 600px; margin: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .header { display: flex; justify-content: space-between; color: #888; margin-bottom: 20px; font-weight: bold; }
+        h3 { color: #2A1A3A; margin-bottom: 25px; }
+        
+        /* Стили для кнопок-ответов */
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 12px;
+            background: #F3EBF9;
+            border: 2px solid #E2CDF4;
+            border-radius: 12px;
+            text-align: left;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #2A1A3A;
+        }
+        .option-btn:hover {
+            background: #C872FC;
+            color: white;
+            border-color: #C872FC;
+        }
+    </style>
+</head>
+<body>
 
-{% block content %}
+<div class="card">
+    <div class="header">
+        <span>Вопрос {{ index + 1 }} из {{ total }}</span>
+        <span id="timer">20:00 ⏱</span>
+    </div>
 
-<h1>Тестирование</h1>
+    <h3>{{ question.text }}</h3>
 
-<a href="/">Главная</a>
+    <form method="POST">
+    <h3>{{ question.text }}</h3>
+    
+    {% for variant in question.variants %}
+        <label>
+            <input type="radio" name="answer" value="{{ variant }}" 
+                   {% if current_answer == variant %}checked{% endif %}>
+            {{ variant }}
+        </label><br>
+    {% endfor %}
 
-{% if result %}
-    <h2>{{ result }}</h2>
-{% endif %}
+    <div style="margin-top: 30px;">
+        {% if index > 0 %}
+            <a href="{{ url_for('test', cat_name=category, index=index-1) }}">Назад</a>
+        {% endif %}
 
-{% endblock %}
+        {% if index < total - 1 %}
+            <button type="submit" name="action" value="next">Далее</button>
+        {% else %}
+            <button type="submit" name="action" value="finish" style="background: green; color: white;">Завершить тест</button>
+        {% endif %}
+    </div>
+</form>
+
+<script>
+    // Таймер (20 минут = 1200 секунд)
+    let timeLeft = 1200; 
+    const timerDisplay = document.getElementById('timer');
+
+    const countdown = setInterval(() => {
+        if (timeLeft <= 0) {
+            clearInterval(countdown);
+            window.location.href = "{{ url_for('result') }}";
+        } else {
+            timeLeft--;
+            let minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            timerDisplay.innerText = 
+                (minutes < 10 ? "0" : "") + minutes + ":" + 
+                (seconds < 10 ? "0" : "") + seconds + " ⏱";
+        }
+    }, 1000);
+</script>
+
+</body>
+</html>
