@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты теста</title>
+</head>
+<body style="font-family: sans-serif; background-color: #f5edfa; padding: 20px; text-align: center;">
+
+    <div style="background: white; max-width: 500px; margin: 30px auto; padding: 40px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); position: relative;">
+        <h2 style="color: #333; margin-top: 0;">Результаты теста</h2>
+        
+        <span style="font-size: 70px;">🏆</span>
+        <h3 style="color: #ba68c8; font-size: 22px; margin: 15px 0 5px 0;">Тест завершен!</h3>
+        <p style="color: #777; margin-bottom: 5px;">Ваш результат</p>
+        
+        <h1 style="font-size: 64px; color: #333; margin: 0;">{{ percent }}%</h1>
+        <p style="color: #555; font-size: 16px;"><strong>{{ score }} из {{ total }}</strong> правильных ответов</p>
+        
+        <div style="display: flex; justify-content: space-around; background: #fafafa; border: 1px solid #eee; padding: 15px; border-radius: 12px; margin: 25px 0;">
+            <div>
+                <p style="margin: 0; color:#999; font-size:12px;">Время</p>
+                <strong>{{ time_spent }}</strong>
+            </div>
+            <div style="border-left: 1px solid #eee; border-right: 1px solid #eee; padding: 0 20px;">
+                <p style="margin: 0; color:#999; font-size:12px;">Место</p>
+                <strong>{{ place }}</strong>
+            </div>
+            <div>
+                <p style="margin: 0; color:#999; font-size:12px;">Уровень</p>
+                <strong>{{ level }}</strong>
+            </div>
+        </div>
+
+        <p style="color: #ba68c8; font-style: italic; font-size: 14px; margin-bottom: 30px;">Проект разработан Backend-командой ИИТ КГТУ.</p>
+
+        <button onclick="toggleReview()" style="background-color: #ba68c8; color: white; border: none; width: 100%; padding: 15px; font-size: 16px; font-weight: bold; border-radius: 12px; cursor: pointer; margin-bottom: 15px;">
+            Посмотреть разбор
+        </button>
+        
+        <button onclick="location.href='/categories'" style="background-color: white; color: #ba68c8; border: 1px solid #ba68c8; width: 100%; padding: 15px; font-size: 16px; font-weight: bold; border-radius: 12px; cursor: pointer;">
+            Пройти другой тест
+        </button>
+    </div>
+
+    <div id="advPopup" style="display: none; position: fixed; bottom: 20px; right: 20px; width: 320px; padding: 20px; background-color: #fffde7; border: 2px solid #fbc02d; box-shadow: 0px 5px 15px rgba(0,0,0,0.25); z-index: 9999; border-radius: 12px; text-align: left;">
+        <span onclick="closePopup()" style="position: absolute; top: 8px; right: 12px; cursor: pointer; font-weight: bold; font-size: 22px; color: #7f8c8d; line-height: 1;">&times;</span>
+        <h4 style="margin-top: 0; margin-bottom: 8px; color: #e65100; font-size: 16px;">🔥 Интенсив по Django & Flask со скидкой 90%!</h4>
+        <p style="font-size: 13px; color: #333; margin: 0 0 12px 0; line-height: 1.4;">Освой продвинутую разработку серверной логики и баз данных для реальных веб-приложений.</p>
+        <button onclick="alert('🎉 Вы успешно записались на интенсив по Python! Скидка 90% активирована. С вами свяжется куратор ИИТ.')" style="background-color: #e65100; color: white; border: none; padding: 8px 15px; font-size: 12px; font-weight: bold; border-radius: 6px; cursor: pointer;">Узнать больше</button>
+    </div>
+
+    <div id="review-block" style="display: none; max-width: 500px; margin: 20px auto; text-align: left; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+        <h3 style="margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; color: #333;">📋 Анализ ваших ответов:</h3>
+        {% for item in report %}
+            <div style="margin-bottom: 15px; padding: 12px; border-left: 4px solid {% if item.is_correct %}#2ecc71{% else %}#e74c3c{% endif %}; background-color: #fafafa; border-radius: 0 8px 8px 0;">
+                <p style="margin: 0 0 5px 0; font-weight: bold; color: #333;">{{ loop.index }}. {{ item.text }}</p>
+                <p style="margin: 0 0 3px 0; font-size: 14px;">Ваш ответ: <span style="color: {% if item.is_correct %}#27ae60{% else %}#c0392b{% endif %}; font-weight: bold;">{{ item.user_ans }}</span></p>
+                {% if not item.is_correct %}
+                    <p style="margin: 0; font-size: 14px; color: #27ae60;">Правильный ответ: <strong>{{ item.correct_ans }}</strong></p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function toggleReview() {
+            var block = document.getElementById("review-block");
+            if (block) {
+                block.style.display = (block.style.display === "none") ? "block" : "none";
+            }
+        }
+
+        setTimeout(function() {
+            var popup = document.getElementById("advPopup");
+            if (popup) popup.style.display = "block";
+        }, 3000);
+
+        function closePopup() {
+            var popup = document.getElementById("advPopup");
+            if (popup) popup.style.display = "none";
+        }
+    </script>
+</body>
+</html>
