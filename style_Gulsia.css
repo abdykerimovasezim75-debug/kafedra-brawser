@@ -2328,3 +2328,86 @@ testRes. */
 }
 
 
+
+
+
+
+
+
+
+/* info.bakl */
+/* Стили контента */
+.content-container {
+    width: 100%;
+    max-width: 1300px;
+    margin: 30px auto;
+    padding: 0px 0px ;
+    padding-left: 0px;
+    
+   
+}
+
+.title-boxreg6{
+    width: 100%;
+    padding-bottom: 10px;
+    padding-top: 10px;
+
+    
+}
+.page-title {
+    font-size: 60px;
+    color: #222222;
+    margin-bottom: 0px;
+    font-weight: 700;
+}
+.lecture-section{
+    width: 95%;
+    padding-bottom: 10px;
+    padding-top: 20px;
+    padding-left: 35px;
+}
+
+.lecture-section h2 {
+    font-size: 35px;
+    color: #111111;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.lecture-section p {
+    margin-bottom: 18px;
+    text-align: justify;
+    font-size: 20px;
+}
+
+.lecture-section h3 {
+    font-size: 24px;
+    margin: 25px 0 15px 0;
+    color: #222222;
+}
+
+.lecture-section ul, 
+.lecture-section ol {
+    margin-left: 20px;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.lecture-section li {
+    margin-bottom: 8px;
+}
+
+.example-box {
+    
+    border-left: 4px solid #bc42c7;
+    padding: 15px;
+    margin: 20px 0;
+    font-style: normal;
+    border-radius: 4px;
+    font-size: 18px;
+}
+
+
+
+
