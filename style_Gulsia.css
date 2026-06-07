@@ -536,29 +536,51 @@ footer{
 
 /* SUBJECTS */
 
-.subjects{
-    display:flex;
-    flex-direction:column;
-    gap:40px;
+.subjects {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;          /* Баскычтардын ортосундагы боштук */
+    width: 100%;        /* Толук туурасы */
+    max-width: 1400px;  /* Максималдуу туурасын макеттегидей чоңойттук */
+    margin: 10px auto;  /* Ортого түздөө */
+    padding: 0 10px;    /* Экрандын капталдарына жабышып калбашы үчүн кичине боштук */
+    box-sizing: border-box;
 }
 
-.subject{
-    width:100%;
-    min-height:90px;
-
-    background:#f8fff5;
-
-    border-radius:20px;
-
-    box-shadow:0 4px 10px rgba(0,0,0,0.2);
-
-    padding:25px 35px;
-
-    font-size:28px;
-
-    display:flex;
-    align-items:center;
+/* Ар бир баскычтын (шилтеменин) өзүнүн стили */
+.subject {
+    width: 100%;
+    min-height: 80px;   /* Бийиктигин макетке карап бир аз туураладык */
+    background-color: #f3fcf1; /* Фигмадагы ачык жашыл-ак өң */
+    border: 1px solid #d2ecd5; /* Назик рамкасы */
+    border-radius: 15px;       /* Бурчтарынын тегеректелүүсү */
+    
+    /* Ички боштуктар: өйдө-ылдый жана капталдары */
+    padding: 15px 35px; 
+    box-sizing: border-box;
+    
+    /* Тексттин стили */
+    font-size: 24px;           /* Шрифттин өлчөмү */
+    font-weight: 500;          /* Тексттин калыңдыгы (Фигмадагыдай орточо) */
+    color: #333333;            /* Тексттин түсү кочкул боз */
+    text-decoration: none;     /* Астындагы сызыкты өчүрүү */
+    
+    display: flex;
+    align-items: center;       /* Текстти вертикалдуу ортолоо */
+    cursor: pointer;
+    
+    /* Фигмадагыдай өтө назик көлөкө */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04); 
+    
+    transition: all 0.2s ease; /* Эффекттердин жылмакайлыгы */
 }
+
+/* Курсорду алып баргандагы абал */
+.subject:hover {
+    background-color: #e6f9e2; /* Бир аз кочкулураак жашыл фон */
+    border-color: #bce2b9;     /* Рамканын өңү да өзгөрөт */
+}
+
 
 
 
