@@ -700,35 +700,43 @@ Dis.Magistature */ */
 }
 
 /* SUBJECTS */
-
-.subjects4{
+.subjects4 {
     width: 95%;
     max-width: 1600px;
     margin: 10px 20px;
-    display:flex;
-    flex-direction:column;
-    gap:40px;
-
+    display: flex;
+    flex-direction: column;
+    
+    /* Аралыкты ушул жерден башкарасыз: */
+    gap: 25px; /* Кнопкалардын ортосу 20 пиксель боштук болот */
 }
-
-.subject2{
-    width:95%;
-    min-height:90px;
+.subject2 {
+    width: 95%;
+    min-height: 90px;
     margin-left: 30px;
-
-    background:#f8fff5;
-
-    border-radius:20px;
-
-    box-shadow:0 4px 10px rgba(0,0,0,0.2);
-
-    padding:25px 35px;
-
-    font-size:28px;
-
-    display:flex;
-    align-items:center;
+    background: #f8fff5;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 25px 35px;
+    font-size: 28px;
+    
+    display: flex;
+    align-items: center;
+    
+    /* Кнопка болушу үчүн кошула турган касиеттер: */
+    cursor: pointer;          /* Чычканды алып барганда колдун белгиси чыгат */
+    border: none;             /* Кнопканын өзүнүн дефолттук рамкасын өчүрөт */
+    text-align: left;         /* Текст сол тараптан башталат */
+    font-family: inherit;     /* Шрифт сайттын шрифти менен бирдей болот */
+    transition: background 0.3s; /* Баскандагы анимация үчүн */
 }
+
+/* Кнопканын үстүнө чычканды алып барганда бир аз караңгыраак болушу үчүн (кааласаңыз): */
+.subject2:hover {
+    background: #e2f0dc;
+}
+
+
 
 
 
