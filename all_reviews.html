@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Отзывы</h1>
+
+<a href="/">Главная</a>
+
+{% for review in reviews %}
+<div>
+    <p>{{ review[2] }}</p>
+</div>
+{% endfor %}
+
+{% endblock %}
