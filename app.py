@@ -2,8 +2,10 @@ import time
 from flask import Flask, render_template, request, redirect, url_for, session
 
 app = Flask(__name__)
+# Секретный ключ для работы сессий
 app.secret_key = 'kstu_secret_2026'
 
+# Временная база данных пользователей в оперативной памяти
 USERS = {}
 
 # Полная база данных: 6 категорий по 15 вопросов = ровно 90 вопросов
@@ -89,7 +91,7 @@ QUESTIONS = {
         {"id": 10, "text": "Какая конструкция используется для безопасной обработки возникающих исключений?", "variants": ["try - except", "try - catch", "if - else", "throw - catch"], "correct": "try - except"},
         {"id": 11, "text": "Какое ключевое слово подключает внешние модули и встроенные библиотеки?", "variants": ["import", "include", "using", "require"], "correct": "import"},
         {"id": 12, "text": "Как обозначается начало однострочного комментария в скрипте на Python?", "variants": ["Символом #", "Двойным слэшем //", "Слэшем со звездочкой /*", "Тегом"], "correct": "Символом #"},
-        {"id": 13, "text": "Какой метод удаляет и возвращает последний элемент списка?", "variants": ["pop()", "remove()", "clear()", "delete()"],"correct": "pop()"},
+        {"id": 13, "text": "Какой метод удаляет и возвращает последний элемент списка?", "variants": ["pop()", "remove()", "clear()", "delete()"], "correct": "pop()"},
         {"id": 14, "text": "Как получить срез списка `lst` с первого по третий элементы включительно?", "variants": ["lst[0:3]", "lst[1:3]", "lst[0:4]", "lst[1:4]"], "correct": "lst[0:3]"},
         {"id": 15, "text": "Какая встроенная библиотека используется для работы с регулярными выражениями?", "variants": ["re", "math", "os", "sys"], "correct": "re"}
     ],
@@ -128,15 +130,17 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        session['user'] = request.form.get('email')
-        return redirect(url_for('categories'))
+        email = request.form.get('email')
+        if email:
+            USERS[email] = email  # Сохраняем в локальную базу данных
+            session['user'] = email
+            return redirect(url_for('categories'))
     return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form.get('email')
-        # Простая проверка: если email есть в словаре USERS, пускаем дальше
         if email in USERS:
             session['user'] = email
             return redirect(url_for('categories'))
@@ -152,32 +156,64 @@ def categories():
 
 @app.route('/start_test/<cat_name>')
 def start_test(cat_name):
-    if 'user' not in session: return redirect(url_for('login'))
-    session['user_answers'] = {}  # Очистка ответов перед началом
+    if 'user' not in session: 
+        return redirect(url_for('login'))
+    
+    session['user_answers'] = {}  # Сброс старых ответов перед началом нового теста
     session['last_cat'] = cat_name
+    
+    # ФИКСИРУЕМ ВРЕМЯ НАЧАЛА: Записываем текущую временную метку в секундах
+    session['start_time'] = time.time() 
+    
     return redirect(url_for('test', cat_name=cat_name, index=0))
 
 @app.route('/test/<cat_name>/<int:index>', methods=['GET', 'POST'])
 def test(cat_name, index):
-    if 'user' not in session: return redirect(url_for('login'))
+    if 'user' not in session: 
+        return redirect(url_for('login'))
     
     questions = QUESTIONS.get(cat_name, [])
-    if index >= len(questions):
+    if index >= len(questions) or index < 0:
         return redirect(url_for('result'))
+    
+    # --- ДИНАМИЧЕСКИЙ РАСЧЕТ ТАЙМЕРА ---
+    total_minutes = META_DATA.get(cat_name, {}).get('time', 20)
+    total_seconds = total_minutes * 60  # Переводим минуты в секунды
+
+    start_time = session.get('start_time')
+    if not start_time:
+        session['start_time'] = time.time()
+        start_time = session['start_time']
+
+    # Считаем, сколько прошло времени с момента вызова start_test
+    seconds_passed = time.time() - start_time
+    time_left = int(total_seconds - seconds_passed)
+    
+    # Если отведенное время закончилось — перенаправляем на результат
+    if time_left <= 0:
+        return redirect(url_for('result'))
+    # -----------------------------------
     
     if request.method == 'POST':
         answer = request.form.get('answer')
+        if 'user_answers' not in session: 
+            session['user_answers'] = {}
+            
+        # Записываем ответ только если пользователь его выбрал
         if answer:
-            if 'user_answers' not in session: session['user_answers'] = {}
-        session['user_answers'][str(index)] = answer
+            session['user_answers'][str(index)] = answer
+            
+        session.modified = True  # Уведомляем Flask об изменениях в сессии
 
-        # Логика кнопок
         action = request.form.get('action')
         if action == 'next':
             return redirect(url_for('test', cat_name=cat_name, index=index + 1))
         elif action == 'finish':
             return redirect(url_for('result'))
-        # Передаем в шаблон текущий ответ, если он уже есть (чтобы радио-кнопка осталась выбранной)
+        else:
+            # Предотвращает дубли в консоли, если форма отправлена без конкретного action
+            return redirect(url_for('test', cat_name=cat_name, index=index))
+            
     current_answer = session.get('user_answers', {}).get(str(index))
     
     return render_template('test.html', 
@@ -185,10 +221,13 @@ def test(cat_name, index):
                            question=questions[index], 
                            index=index, 
                            total=len(questions),
-                           current_answer=current_answer)
+                           current_answer=current_answer,
+                           time_left=time_left)  # Передаем высчитанный остаток в HTML
+
 @app.route('/result')
 def result():
-    if 'user' not in session: return redirect(url_for('login'))
+    if 'user' not in session: 
+        return redirect(url_for('login'))
     
     cat_name = session.get('last_cat', 'theory')
     user_answers = session.get('user_answers', {})
@@ -199,14 +238,24 @@ def result():
     for i, q in enumerate(questions):
         u_ans = user_answers.get(str(i))
         is_corr = (u_ans == q['correct'])
-        if is_corr: score += 1
-        report.append({'text': q['text'], 'user_ans': u_ans, 'correct_ans': q['correct'], 'is_correct': is_corr})
+        if is_corr: 
+            score += 1
+        report.append({
+            'text': q['text'], 
+            'user_ans': u_ans, 
+            'correct_ans': q['correct'], 
+            'is_correct': is_corr
+        })
             
     percent = int((score / len(questions)) * 100) if questions else 0
     show_razbor = request.args.get('razbor') == 'true'
     
-    return render_template('result.html', score=score, total=len(questions), percent=percent, 
-                           show_razbor=show_razbor, report=report)
+    return render_template('result.html', 
+                           score=score, 
+                           total=len(questions), 
+                           percent=percent, 
+                           show_razbor=show_razbor, 
+                           report=report)
 
 if __name__ == '__main__':
     app.run(debug=True)
