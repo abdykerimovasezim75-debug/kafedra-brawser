@@ -942,17 +942,37 @@ Dis.Magistature */ */
     color:#555;
 }
 
-.review-btn{
-    margin-top:50px;
-    background:#c85cf3;
-    color:white;
-    border:none;
-    padding:18px 55px;
-    border-radius:20px;
-    font-size:28px;
-    cursor:pointer;
-    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+/* 1. Контейнер для кнопок (выравнивает их по центру и ставит в ряд) */
+.buttons-group {
+    display: flex;
+    justify-content: center; /* Центрирует кнопки по горизонтали */
+    gap: 80px;               /* Расстояние между кнопками */
+    margin-top: 70px;        /* Отступ всей группы кнопок сверху */
+    width: 100%;  
+   
 }
+
+/* 2. Общие красивые стили для обеих кнопок */
+.review-btn {
+    background-color: #c85cf3; /* Фиолетовый цвет по умолчанию */
+    color: white;
+    border: none;
+    padding: 16px 55px;
+    border-radius: 20px;
+    font-size: 28px;
+    font-weight: 600;          /* Чтобы текст был плотнее, как на макете */
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease; /* Плавность при наведении */
+}
+
+/* 3. Модификатор для кнопки "Прочитать отзывы" (делаем ее светлее) */
+.review-btn.read-btn {
+    background-color: #c85cf3; /* Светло-фиолетовый фон */
+    color: white;            /* Фиолетовый текст для хорошей читаемости */
+}
+
+
 
 
 
