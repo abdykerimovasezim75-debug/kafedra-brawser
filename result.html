@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результаты тестирования</title>
+    <style>
+        :root {
+            --bg-color: #F1E4FC;
+            --card-bg: #FFFFFF;
+            --purple-main: #C872FC;
+            --purple-dark: #58337E;
+            --text-dark: #2A1A3A;
+            --pink-badge: #FF33DF;
+            --green-success: #2ECC71;
+            --red-fail: #E74C3C;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0; padding: 0;
+            color: var(--text-dark);
+        }
+        header {
+            background: #FFFFFF;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .logo-text { font-size: 11px; font-weight: bold; text-transform: uppercase; line-height: 1.3; }
+        nav a { text-decoration: none; color: #333; margin-left: 20px; font-size: 13px; font-weight: 600; }
+        
+        .container { max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        .result-card { background: white; border-radius: 32px; padding: 40px; text-align: center; box-shadow: 0 10px 40px rgba(88, 51, 126, 0.06); }
+        
+        .score-circle { width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 20px auto; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold; }
+        .score-circle.perfect { background: #E8F8F0; color: var(--green-success); border: 4px solid var(--green-success); }
+        .score-circle.bad { background: #FDEDEC; color: var(--red-fail); border: 4px solid var(--red-fail); }
+        .score-circle .num { font-size: 32px; }
+        .score-circle .percent { font-size: 14px; opacity: 0.8; }
+
+        h1 { margin: 0 0 10px 0; font-size: 28px; }
+        .comment { color: #666; font-size: 16px; margin-bottom: 30px; }
+
+        /* ================= РЕКЛАМНЫЕ БЛОКИ ================= */
+        .ad-banner { border-radius: 24px; padding: 25px; margin: 30px 0; text-align: left; position: relative; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.05); }
+        
+        /* Реклама, если ВСЁ ОТЛИЧНО (>= 80%) */
+        .ad-banner.excellent-ad { background: linear-gradient(135deg, #6A11CB 0%, #2575FC 100%); color: white; }
+        .ad-banner.excellent-ad .ad-btn { background: #FFFFFF; color: #2575FC; }
+        
+        /* Реклама, если результат ПЛОХОЙ (< 50%) */
+        .ad-banner.poor-ad { background: linear-gradient(135deg, #FF33DF 0%, #FF85A5 100%); color: white; }
+        .ad-banner.poor-ad .ad-btn { background: #FFFFFF; color: #FF33DF; }
+
+        .ad-banner h3 { margin: 0 0 8px 0; font-size: 20px; font-weight: bold; }
+        .ad-banner p { margin: 0 0 20px 0; font-size: 14px; line-height: 1.5; opacity: 0.9; }
+        .ad-btn { display: inline-block; padding: 10px 25px; border-radius: 14px; text-decoration: none; font-weight: bold; font-size: 14px; transition: transform 0.2s; }
+        .ad-btn:hover { transform: scale(1.03); }
+        /* =================================================== */
+
+        .actions { display: flex; gap: 15px; justify-content: center; margin-top: 25px; }
+        .btn { padding: 12px 25px; border-radius: 14px; text-decoration: none; font-weight: bold; font-size: 15px; display: inline-block; }
+        .btn-primary { background: var(--purple-main); color: white; }
+        .btn-secondary { background: #EEDCFC; color: var(--purple-dark); }
+
+        /* Блок разбора ошибок */
+        .review-section { text-align: left; margin-top: 40px; border-top: 1px solid #EAE0F5; padding-top: 30px; }
+        .review-item { background: #FDFBFF; padding: 20px; border-radius: 18px; margin-bottom: 15px; border-left: 5px solid #ccc; }
+        .review-item.correct { border-left-color: var(--green-success); background: #F4FBF7; }
+        .review-item.incorrect { border-left-color: var(--red-fail); background: #FDF5F5; }
+        .q-text { font-weight: bold; margin-bottom: 10px; }
+        .ans-line { font-size: 14px; margin: 4px 0; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-text">Институт информационных технологий<br><span style="color: #777;">Кафедра компьютерной лингвистики</span></div>
+        <nav>
+            <a href="{{ url_for('categories') }}">К категориям</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="result-card">
+            
+            <!-- Динамический кружок в зависимости от успеха -->
+            {% if percent >= 80 %}
+                <div class="score-circle perfect">
+                    <span class="num">{{ score }}/{{ total }}</span>
+                    <span class="percent">{{ percent }}%</span>
+                </div>
+                <h1>Потрясающий результат! 🎉</h1>
+                <p class="comment">Вы продемонстрировали глубокие знания предмета. Так держать!</p>
+            {% else %}
+                <div class="score-circle bad">
+                    <span class="num">{{ score }}/{{ total }}</span>
+                    <span class="percent">{{ percent }}%</span>
+                </div>
+                <h1>Тест завершен!</h1>
+                <p class="comment">Вы дошли до конца, но есть зоны, которые стоит подтянуть.</p>
+            {% endif %}
+
+            <!-- ================= БЛОК УМНОЙ РЕКЛАМЫ ================= -->
+            {% if percent >= 80 %}
+                <!-- РЕКЛАМА ДЛЯ ТЕХ, КТО СДАЛ ОТЛИЧНО -->
+                <div class="ad-banner excellent-ad">
+                    <h3>Вы — настоящий эксперт! 🚀</h3>
+                    <p>Кафедра компьютерной лингвистики приглашает вас принять участие в оплачиваемой стажировке по разработке LLM-моделей. Получите международный сертификат ИИТ!</p>
+                    <a href="https://t.me/your_bot_link" target="_blank" class="ad-btn">Подать заявку в 1 клик</a>
+                </div>
+            {% elif percent < 50 %}
+                <!-- РЕКЛАМА ДЛЯ ТЕХ, У КОГО СЛАБЫЙ РЕЗУЛЬТАТ -->
+                <div class="ad-banner poor-ad">
+                    <h3>Нужно подтянуть базу? Мы поможем! 💡</h3>
+                    <p>Не расстраивайтесь! Специально для вас открыт бесплатный доступ к интенсивному курсу «Быстрый старт в НЛП и Python». Закройте все пробелы в знаниях за 3 занятия.</p>
+                    <a href="https://t.me/your_bot_link" target="_blank" class="ad-btn">Активировать курс бесплатно</a>
+                </div>
+            {% endif %}
+            <!-- ===================================================== -->
+
+            <div class="actions">
+                <a href="{{ url_for('categories') }}" class="btn btn-primary">Вернуться к тестам</a>
+                {% if not show_razbor %}
+                    <a href="{{ url_for('result', razbor='true') }}" class="btn btn-secondary">Показать разбор ошибок</a>
+                {% endif %}
+            </div>
+
+            <!-- Разбор ошибок (работает на основе вашего app.py) -->
+            {% if show_razbor %}
+                <div class="review-section">
+                    <h2>Подробный разбор ответов:</h2>
+                    {% for item in report %}
+                        <div class="review-item {% if item.is_correct %}correct{% else %}incorrect{% endif %}">
+                            <div class="q-text">{{ loop.index }}. {{ item.text }}</div>
+                            <div class="ans-line"><b>Ваш ответ:</b> {{ item.user_ans if item.user_ans else "Вы не ответили" }}</div>
+                            {% if not item.is_correct %}
+                                <div class="ans-line" style="color: var(--green-success);"><b>Правильный ответ:</b> {{ item.correct_ans }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+</body>
+</html>
