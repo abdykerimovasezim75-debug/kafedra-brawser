@@ -1,29 +1,38 @@
-<link rel="stylesheet" href="/static/style.css">
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>University Portal</title>
     <link rel="stylesheet" href="/static/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 </head>
 <body>
 
-<div class="navbar">
+<div class="navbar desktop-header">
     <h2>University</h2>
     <div>
-        <a href="/">Главная</a>
-        <a href="/subjets">Дисциплины</a>
+        <a href="/subjects">Дисциплины</a>
         <a href="/teachers">Преподаватели</a>
         <a href="/news">Новости</a>
         <a href="/feedback">Отзывы</a>
+        <a href="/chatbot">Бот-помощник</a>
         <a href="/test">Тестирование</a>
         <a href="/login">Войти</a>
     </div>
 </div>
 
-<!-- CONTENT -->
+<div class="mobile-header">
+    <div class="mobile-logo">University</div>
+    <div class="mobile-nav">
+        <a href="/subjects">Дисциплины</a>
+        <a href="/teachers">Преподаватели</a>
+        <a href="/news">Новости</a>
+        <a href="/feedback">Отзывы</a>
+        <a href="/chatbot">Бот-помощник</a>
+        <a href="/test">Тестирование</a>
+        <a href="/login" class="mobile-cabinet-btn">Войти</a>
+    </div>
+</div>
+
 <div class="container">
     {% block content %}
     {% endblock %}
