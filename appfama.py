@@ -5,6 +5,7 @@ from datetime import datetime
 import os
 from PIL import Image
 from werkzeug.utils import secure_filename
+from database import get_all_teachers, get_all_subjects, get_all_news
 
 
 
@@ -15,22 +16,25 @@ app.secret_key = "secret123"
 @app.route("/")
 def home():
     return render_template("index.html")
-
+    
 @app.route("/about")
 def about():
     return render_template("about.html")
 
 @app.route("/teachers")
 def teachers():
-    return render_template("teachers.html")
+    teachers = get_all_teachers()
+    return render_template("teachers.html", teachers=teachers)
 
 @app.route("/subjects")
 def subjects():
-    return render_template("subjects.html")
+    subjects = get_all_subjects()
+    return render_template("subjects.html", subjects=subjects)
 
 @app.route("/news")
 def news():
-    return render_template("news.html")
+    news = get_all_news()
+    return render_template("news.html", news=news)
 
 @app.route("/test")
 def test():
