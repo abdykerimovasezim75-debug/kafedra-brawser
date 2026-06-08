@@ -151,6 +151,36 @@ def categories():
         return redirect(url_for('login'))
     return render_template('categories.html')
 
+@app.route('/subjects')
+def subjects():
+    if 'user' not in session:
+        return redirect(url_for('login'))
+    return render_template('subjects.html')
+
+@app.route('/teachers')
+def teachers():
+    if 'user' not in session:
+        return redirect(url_for('login'))
+    return render_template('teachers.html')
+
+@app.route('/news')
+def news():
+    if 'user' not in session:
+        return redirect(url_for('login'))
+    return render_template('news.html')
+
+@app.route('/feedback')
+def feedback():
+    if 'user' not in session:
+        return redirect(url_for('login'))
+    return render_template('feedback.html')
+
+@app.route('/chatbot')
+def chatbot():
+    if 'user' not in session:
+        return redirect(url_for('login'))
+    return render_template('chatbot.html')
+
 # МАРШРУТ ДЛЯ СТРАНИЦЫ ПРЕВЬЮ ТЕСТА
 @app.route('/preview/<cat_name>')
 def preview(cat_name):
