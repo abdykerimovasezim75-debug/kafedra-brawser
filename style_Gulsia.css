@@ -2458,197 +2458,70 @@ testRes. */
     font-size: 18px;
 }
 
-/* ==========================================================
-   СУПЕР-ПАК ДЛЯ МОБИЛЬНОЙ ВЕРСТКИ (СТРОГО В КОНЕЦ ФАЙЛА)
-   ========================================================== */
 @media screen and (max-width: 768px) {
-    
-    /* 1. ГЛОБАЛЬНЫЕ СБРОСЫ: Всё в одну колонку, убираем фиксированную ширину */
-    main, .main4, .container, .review-container, .quiz-container, .result-section, .bot-section, .chat-section, .disciplines-section, .disciplines12, .teachers-section, .new-main {
+    /* 1. Находим ЛЮБОЙ белый блок в самом верху сайта и заставляем его растягиваться */
+    header, nav, div[class*="header"], div[class*="nav"], .wrapper, [class*="top"] {
+        display: flex !important;
+        flex-direction: column !important;
+        height: auto !important; /* Убираем жесткую высоту, которая зажимала текст */
         width: 100% !important;
         max-width: 100% !important;
-        padding: 15px !important;
+        position: static !important;
+        background-color: #ffffff !important; /* Сохраняем белый фон шапки */
+        padding: 15px 0 !important;
         margin: 0 auto !important;
-        box-sizing: border-box !important;
-    }
-
-    /* 2. ШАПКА (HEADER) — Больше никакой каши */
-    header {
-        height: auto !important;
-        flex-direction: column !important;
-        gap: 15px !important;
-        padding: 15px !important;
-    }
-
-    .logo {
-        flex-direction: column !important;
-        text-align: center !important;
-        gap: 5px !important;
-    }
-
-    .logo img {
-        width: 50px !important;
-        height: 50px !important;
-    }
-
-    nav {
-        flex-direction: column !important;
-        gap: 12px !important;
-        text-align: center !important;
-        width: 100% !important;
-    }
-
-    nav a {
-        font-size: 16px !important;
-        display: block !important;
-        padding: 5px 0 !important;
-    }
-
-    .login-btn {
-        width: 100% !important;
-        max-width: 200px !important;
-        font-size: 14px !important;
-        padding: 8px 15px !important;
-    }
-
-    /* 3. ШРИФТЫ И ЗАГОЛОВКИ: Убираем гигантизм в 60px */
-    h1, .hero-text h1, .title-box h1, .title-box2 h1, .top-block h1, .top-title h1, .result-section h1, .quiz-container h1 {
-        font-size: 26px !important;
-        line-height: 1.2 !important;
-        text-align: center !important;
-        margin-left: 0 !important;
-        padding: 0 !important;
-    }
-
-    h2, .hero-text h2, .text h2, .question-box h2 {
-        font-size: 20px !important;
-        line-height: 1.3 !important;
-        text-align: center !important;
-    }
-
-    h3, .category-card h3, .test-card h3 {
-        font-size: 18px !important;
-    }
-
-    .breadcrumb, .path, .path1, .path4, .path7 {
-        font-size: 14px !important;
-        text-align: center !important;
+        align-items: center !important;
         justify-content: center !important;
-        padding: 0 !important;
-        margin: 10px auto !important;
     }
 
-    /* 4. СЕТКИ И КАРТОЧКИ (GRID / FLEX) */
-    /* Главная страница, Преподаватели, Категории тестов */
-    .cards, .grid, .teachers-grid, .category-grid, .test-grid3, .steps {
+    /* 2. Логотип кафедры (текст слева) центрируем и даем ему дышать */
+    [class*="logo"], div[class*="text"], h1, h2 {
+        width: 90% !important;
+        text-align: center !important;
+        margin: 0 auto 10px auto !important;
+        padding: 0 !important;
+    }
+
+    /* 3. Меню со ссылками выстраиваем ровно по центру друг за другом */
+    nav, .menu, [class*="menu-list"] {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
-        gap: 20px !important;
+        gap: 8px !important;
         width: 100% !important;
-        margin: 20px 0 !important;
-        padding: 0 !important;
+        margin: 10px 0 !important;
     }
 
-    /* Делаем все карточки адаптивными по ширине экрана */
-    .card, .card1, .card2, .teacher-card, .category-card, .test-card, .step-card, .news-card, .review-card {
+    /* Ссылки внутри меню делаем крупнее, чтобы по ним было удобно тыкать пальцем */
+    nav a, .menu a, [class*="nav"] a {
+        display: inline-block !important;
+        padding: 5px 10px !important;
+        font-size: 15px !important;
+        text-align: center !important;
+        width: auto !important;
+    }
+
+    /* 4. Кнопку личного кабинета кидаем в самый низ шапки */
+    .button, [class*="cabinet"], [class*="btn"] {
+        position: static !important;
+        margin: 10px auto 0 auto !important;
+        display: inline-block !important;
+        width: auto !important;
+    }
+
+    /* 5. Карточки категорий и тестов выстраиваем в ровную вертикальную ленту */
+    .container, .grid, .row, [class*="cards"], [class*="grid"] {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
         width: 100% !important;
-        max-width: 100% !important;
-        min-height: auto !important;
-        padding: 20px !important;
-        margin: 0 0 10px 0 !important;
+        padding: 0 10px !important;
         box-sizing: border-box !important;
     }
 
-    /* Специфичные размеры картинок в карточках */
-    .hero-image img, .hero-img img, .teacher-card img, .teacher-info, .news-card img, .card-content img {
+    .card, [class*="card"], .test-block, [class*="item"] {
         width: 100% !important;
-        max-width: 100% !important;
-        height: auto !important;
-    }
-
-    .teacher-info {
-        border-radius: 0 0 15px 15px !important;
-    }
-
-    /* Кнопки и табы (Дисциплины: Бакалавриат / Магистратура) */
-    .buttons, .buttons2, .buttons-group {
-        flex-direction: column !important;
-        gap: 10px !important;
-        padding: 0 !important;
-        width: 100% !important;
-    }
-
-    .tab-btn1, .tab-btn2, .tab-btn, .tab-btn3, .search-btn, .review-btn, .bot-btn, .start-btn, .back-btn, .next-btn {
-        width: 100% !important;
-        max-width: 280px !important;
-        padding: 12px 20px !important;
-        font-size: 18px !important;
-        height: auto !important;
-        margin: 5px auto !important;
-        white-space: normal !important;
-        text-align: center !important;
-    }
-
-    /* Элементы списков в Дисциплинах */
-    .subjects, .subjects4 {
-        width: 100% !important;
-        padding: 0 !important;
-        margin: 10px 0 !important;
-        gap: 10px !important;
-    }
-
-    .subject, .subject2, .answer {
-        font-size: 16px !important;
-        padding: 15px 20px !important;
-        min-height: auto !important;
-        margin-left: 0 !important;
-        width: 100% !important;
-    }
-
-    /* Отзывы и Бот */
-    .card-content {
-        flex-direction: column !important;
-        text-align: center !important;
-    }
-
-    .text-box, .robot, .bot-image {
-        width: 100% !important;
-        max-width: 260px !important;
-    }
-
-    .text-box p, .functions, .contacts, .simple-text, .news-card p {
-        font-size: 16px !important;
-        line-height: 1.4 !important;
-    }
-
-    /* ЧАТ БОТ */
-    .chat-container {
-        padding: 10px !important;
-        gap: 15px !important;
-    }
-    
-    .message {
-        max-width: 95% !important;
-    }
-
-    .bubble {
-        font-size: 14px !important;
-        padding: 10px 14px !important;
-    }
-
-    .chat-input {
-        height: 50px !important;
-    }
-
-    /* Фикс абсолютного позиционирования в элементах */
-    .icon-header3 h5 {
-        position: static !important;
-        margin-top: 10px !important;
-        text-align: center !important;
+        max-width: 320px !important;
+        margin: 0 0 15px 0 !important;
     }
 }
-
-
-
-
